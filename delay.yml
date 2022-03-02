@@ -1,0 +1,40 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: istio-ex
+spec:
+  hosts:
+    - "*"
+  gateways:
+    - istio-ex-gw
+  http:
+    - name: "ex 1 route"
+      match:
+        - uri:
+            exact: /a
+      route:
+        - destination:
+            host: istio-ex-1
+            subset: v1
+            port:
+              number: 8080
+    - name: "ex2 v1 route"
+      match:
+        - headers:
+            test:
+              exact: test
+      route:
+        - destination:
+            host: istio-ex-2
+            subset: v1
+            port:
+              number: 8081
+    - name: "ex2 v2 route"
+      fault:
+        delay:
+          percent: 100
+          fixedDelay: 1s
+      route:
+        - destination:
+            host: istio-ex-2
+            subset: v2
