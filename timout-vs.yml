@@ -19,8 +19,8 @@ spec:
             port:
               number: 8081
       fault:
-        abort:
-          httpStatus: 500
+        delay:
+          fixedDelay: 5s
           percentage:
             value: 50
     - name: "ex 1 route"
