@@ -19,12 +19,14 @@ spec:
               number: 8080
     - name: "ex2 v1 route"
       match:
+        - uri:
+            exact: /b
         - headers:
             test:
               exact: test
       route:
         - destination:
-            host: istio1
+            host: istio2
             subset: v1
             port:
               number: 8081
@@ -33,8 +35,3 @@ spec:
         subset: v2
       mirrorPercentage:
         value: 100
-    - name: "ex2 v2 route"
-      route:
-        - destination:
-            host: istio2
-            subset: v2
